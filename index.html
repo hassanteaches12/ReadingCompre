@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Grade 5 Reading Comprehension — AutoMark</title>
+<style>
+  /* Simple kid-friendly styling — edit as you wish */
+  :root{font-family: system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial; --card:#fff; --bg:#f5f9ff; --accent:#2b6cb0;}
+  body{margin:0;background:linear-gradient(180deg,var(--bg),#ffffff);padding:24px;color:#123;}
+  .wrap{max-width:860px;margin:0 auto}
+  header{display:flex;gap:16px;align-items:center;margin-bottom:18px}
+  h1{margin:0;font-size:1.6rem}
+  .card{background:var(--card);box-shadow:0 6px 18px rgba(18,28,48,0.08);border-radius:12px;padding:18px;margin-bottom:14px}
+  p.lead{margin:0 0 12px 0;color:#234}
+  .question{margin-bottom:14px;padding:12px;border-radius:8px;background:linear-gradient(180deg,#fff,#f7fbff)}
+  label.option{display:block;padding:8px;border-radius:8px;margin:6px 0;cursor:pointer}
+  input[type="text"]{width:100%;padding:8px;border-radius:6px;border:1px solid #d0d7e6}
+  .btn{display:inline-block;padding:8px 12px;border-radius:8px;background:var(--accent);color:white;border:none;cursor:pointer}
+  .btn.secondary{background:#e2eefc;color:var(--accent);border:1px solid rgba(43,108,176,0.12)}
+  .result{font-weight:700}
+  .feedback{margin-top:6px;padding:8px;border-radius:6px;background:#f0fbf7;color:#064;display:none}
+  .wrong{background:#fff6f6;color:#8a1f1f;display:none}
+  footer{margin-top:20px;text-align:center;color:#546}
+  .meta{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  pre.small{background:#f8f9fb;padding:8px;border-radius:6px;font-size:0.9rem;overflow:auto}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='44' height='44'><rect rx='8' width='44' height='44' fill='%232b6cb0'/><text x='50%' y='54%' font-size='22' font-family='Arial' fill='white' text-anchor='middle'>R</text></svg>" alt="" />
+    <div>
+      <h1>Reading Comprehension — Grade 5</h1>
+      <div class="meta"><small>Time: 25 mins • Auto-marking enabled</small></div>
+    </div>
+  </header>
+
+  <section class="card" id="instructions">
+    <p class="lead">Read the passage carefully, then answer the questions below. Type your name before starting. Use full sentences for the short answers.</p>
+    <div style="display:flex;gap:10px;align-items:center">
+      <input id="studentName" placeholder="Student name" type="text" />
+      <button class="btn secondary" id="saveName">Save name</button>
+      <div id="savedName" style="margin-left:auto;color:#345"></div>
+    </div>
+  </section>
+
+  <section class="card" id="passage">
+    <h3>Passage</h3>
+    <p>
+      One spring morning, Zahra woke to the sound of birds and a surprising knock. At her doorstep sat an old, patched book with no name on it.
+      When she opened it she found pages of maps and tiny drawings of places she had never seen. The last page held a short note:
+      "For the brave who reads." Zahra decided to follow the map, and so began a small adventure that changed how she saw the city.
+    </p>
+  </section>
+
+  <form id="quiz">
+    <!-- Q1: multiple choice -->
+    <div class="question" data-qid="q1" data-type="mcq">
+      <strong>1. What did Zahra hear on the morning of the story?</strong>
+      <div>
+        <label class="option"><input type="radio" name="q1" value="a" /> Dogs barking</label>
+        <label class="option"><input type="radio" name="q1" value="b" /> Birds</label>
+        <label class="option"><input type="radio" name="q1" value="c" /> Thunder</label>
+        <label class="option"><input type="radio" name="q1" value="d" /> A trumpet</label>
+      </div>
+      <div class="feedback" id="fb-q1"></div>
+    </div>
+
+    <!-- Q2: short answer (accept synonyms) -->
+    <div class="question" data-qid="q2" data-type="short">
+      <strong>2. What was at Zahra's doorstep?</strong>
+      <input type="text" name="q2" id="q2" placeholder="Write your answer..." />
+      <div class="feedback" id="fb-q2"></div>
+    </div>
+
+    <!-- Q3: checkbox (multiple correct) -->
+    <div class="question" data-qid="q3" data-type="checkbox">
+      <strong>3. Which of the following were in the old book? (choose all that apply)</strong>
+      <label class="option"><input type="checkbox" name="q3" value="maps" /> Maps</label>
+      <label class="option"><input type="checkbox" name="q3" value="tiny drawings" /> Tiny drawings</label>
+      <label class="option"><input type="checkbox" name="q3" value="money" /> Money</label>
+      <label class="option"><input type="checkbox" name="q3" value="flowers" /> Flowers</label>
+      <div class="feedback" id="fb-q3"></div>
+    </div>
+
+    <!-- Q4: cloze / fill -->
+    <div class="question" data-qid="q4" data-type="cloze">
+      <strong>4. Complete the sentence: The last page held a short ______.</strong>
+      <input type="text" name="q4" id="q4" placeholder="one word" />
+      <div class="feedback" id="fb-q4"></div>
+    </div>
+
+    <!-- Q5: long answer (teacher graded but we give keyword hints) -->
+    <div class="question" data-qid="q5" data-type="long">
+      <strong>5. In 2–3 sentences, explain why Zahra decided to follow the map.</strong>
+      <textarea name="q5" id="q5" rows="4" style="width:100%;padding:8px;border-radius:6px;border:1px solid #d0d7e6"></textarea>
+      <small>Teacher will review this; we will show keyword match score automatically.</small>
+      <div class="feedback" id="fb-q5"></div>
+    </div>
+
+    <div style="display:flex;gap:8px;align-items:center;margin-top:12px">
+      <button type="button" class="btn" id="submitBtn">Submit & Grade</button>
+      <button type="button" class="btn secondary" id="clearBtn">Clear answers</button>
+      <button type="button" class="btn secondary" id="downloadCSV">Download CSV</button>
+      <div style="margin-left:auto"><strong id="scoreDisplay"></strong></div>
+    </div>
+  </form>
+
+  <div id="finalCard" class="card" style="display:none;margin-top:14px">
+    <h3>Result</h3>
+    <p class="result" id="finalResult"></p>
+    <p><strong>Detailed feedback:</strong></p>
+    <div id="detailedFeedback"></div>
+  </div>
+
+  <footer>
+    <small>Made for classrooms • Edit questions in the HTML • For secure collection, enable WEBHOOK or use a server.</small>
+  </footer>
+</div>
+
+<script>
+/* ========== CONFIG ========== */
+/* Put your webhook URL here to collect results server-side (optional) */
+const WEBHOOK_URL = ""; // e.g. https://hooks.example.com/collect
+
+/* Questions model: acceptable answers and scoring */
+const key = {
+  q1: {type:'mcq', correct:'b', points:1, feedback:"She heard birds singing in the morning."},
+  q2: {
+    type:'short',
+    // acceptable answers for short-answer (lowercase). Include synonyms.
+    accepts: ['an old book','a book','old book','a patched book','patched book','a book with no name','book'],
+    points:1,
+    feedback:"It was an old, patched book left at her doorstep."
+  },
+  q3: {
+    type:'checkbox',
+    correctSet: ['maps','tiny drawings'],
+    points:1,
+    feedback:"The book had maps and tiny drawings."
+  },
+  q4: {
+    type:'cloze',
+    accepts: ['note'],
+    points:1,
+    feedback:"The last page held a short note."
+  },
+  q5: {
+    type:'long',
+    keywords: ['brave','maps','adventure','follow','curious','changed'],
+    points:2,
+    feedback:"Look for words that connect her curiosity, the map, and a desire for change."
+  }
+};
+
+/* Fuzzy matching thresholds */
+const LEV_THRESHOLD = 2; // allow small typos
+const KEYWORD_MATCH_THRESHOLD = 1; // how many keywords to award partial for long answer
+
+/* ========== UTILITIES ========== */
+function normalize(s){ return String(s||'').trim().toLowerCase(); }
+
+// simple Levenshtein distance for fuzzy checks
+function levenshtein(a,b){
+  a=String(a||''); b=String(b||'');
+  if(a===b) return 0;
+  const m=a.length, n=b.length;
+  const dp = Array.from({length:m+1},(_,i)=>i);
+  for(let j=1;j<=n;j++){
+    let prev = dp[0];
+    dp[0]=j;
+    for(let i=1;i<=m;i++){
+      let cur = dp[i];
+      let cost = a[i-1]===b[j-1]?0:1;
+      dp[i] = Math.min(dp[i]+1, dp[i-1]+1, prev+cost);
+      prev = cur;
+    }
+  }
+  return dp[m];
+}
+
+/* CSV helper */
+function toCSVRow(obj){
+  return Object.values(obj).map(v => `"${String(v).replace(/"/g,'""')}"`).join(',');
+}
+
+/* Save/Load */
+function saveState(){
+  const data = {name: (document.getElementById('studentName').value||'').trim()};
+  const inputs = new FormData(document.getElementById('quiz'));
+  for(let [k,v] of inputs.entries()){
+    // multiple checkboxes are captured individually; we'll build arrays
+    if(k in data && Array.isArray(data[k])) data[k].push(v);
+    else if(k in data) data[k] = [data[k], v];
+    else data[k] = v;
+  }
+  localStorage.setItem('readingQuizDraft', JSON.stringify(data));
+  showSavedName();
+}
+function loadState(){
+  try{
+    const raw = localStorage.getItem('readingQuizDraft');
+    if(!raw) return;
+    const data = JSON.parse(raw);
+    if(data.name) document.getElementById('studentName').value = data.name;
+    Object.keys(data).forEach(k=>{
+      if(k==='name') return;
+      const el = document.getElementsByName(k);
+      if(!el) return;
+      if(el[0] && el[0].type === 'radio'){
+        for(let r of el) if(r.value===data[k]) r.checked=true;
+      } else if(el[0] && el[0].type === 'checkbox'){
+        const arr = Array.isArray(data[k])?data[k]:[data[k]];
+        for(let c of el) if(arr.includes(c.value)) c.checked=true;
+      } else {
+        const single = document.getElementById(k);
+        if(single) single.value = Array.isArray(data[k])?data[k][0]:data[k];
+      }
+    });
+  } catch(e){ console.warn(e) }
+}
+
+function clearAnswers(){
+  document.getElementById('quiz').reset();
+  localStorage.removeItem('readingQuizDraft');
+  document.getElementById('scoreDisplay').textContent='';
+  document.getElementById('finalCard').style.display='none';
+  showSavedName();
+}
+
+/* ========== GRADING LOGIC ========== */
+function grade(){
+  const name = (document.getElementById('studentName').value||'').trim();
+  if(!name){
+    alert('Please type the student name before submitting.');
+    return;
+  }
+
+  const results = {};
+  let totalPoints = 0, earned = 0;
+
+  // Q1 mcq
+  totalPoints += key.q1.points;
+  const q1v = document.querySelector('input[name="q1"]:checked')?.value || '';
+  const q1ok = q1v === key.q1.correct;
+  results.q1 = {answer:q1v||'(no answer)', ok:q1ok, points: q1ok?key.q1.points:0, feedback: key.q1.feedback};
+  earned += results.q1.points;
+
+  // Q2 short with accept list + fuzzy
+  totalPoints += key.q2.points;
+  const q2v = normalize(document.getElementById('q2').value);
+  let q2ok = false;
+  let matchedAccept = '';
+  if(q2v.length){
+    for(const acc of key.q2.accepts){
+      if(levenshtein(q2v, normalize(acc)) <= LEV_THRESHOLD){ q2ok = true; matchedAccept = acc; break; }
+      // also allow keyword contain
+      if(q2v.includes(normalize(acc))) { q2ok = true; matchedAccept = acc; break;}
+    }
+  }
+  results.q2 = {answer:document.getElementById('q2').value || '(no answer)', ok:q2ok, points:q2ok?key.q2.points:0, feedback:key.q2.feedback + (matchedAccept?` (matched: "${matchedAccept}")`: '')};
+  earned += results.q2.points;
+
+  // Q3 checkbox multiple correct
+  totalPoints += key.q3.points;
+  const q3els = Array.from(document.querySelectorAll('input[name="q3"]:checked')).map(i=>i.value);
+  const correctSet = key.q3.correctSet;
+  // award point only if all correct chosen and no incorrects
+  const allCorrect = correctSet.every(x => q3els.includes(x));
+  const noExtras = q3els.every(x => correctSet.includes(x));
+  const q3ok = allCorrect && noExtras;
+  results.q3 = {answer:q3els.join(', ') || '(no answer)', ok:q3ok, points:q3ok?key.q3.points:0, feedback:key.q3.feedback};
+  earned += results.q3.points;
+
+  // Q4 cloze
+  totalPoints += key.q4.points;
+  const q4v = normalize(document.getElementById('q4').value);
+  let q4ok = false;
+  for(const a of key.q4.accepts){
+    if(levenshtein(q4v, normalize(a)) <= LEV_THRESHOLD || q4v===normalize(a)) { q4ok=true; break; }
+  }
+  results.q4 = {answer:document.getElementById('q4').value || '(no answer)', ok:q4ok, points:q4ok?key.q4.points:0, feedback:key.q4.feedback};
+  earned += results.q4.points;
+
+  // Q5 long answer — keyword matching
+  totalPoints += key.q5.points;
+  const q5v = normalize(document.getElementById('q5').value);
+  let matchCount = 0;
+  for(const kw of key.q5.keywords){
+    if(q5v.includes(kw)) matchCount++;
+  }
+  // compute partial points: simple proportional
+  const q5points = Math.round((matchCount / key.q5.keywords.length) * key.q5.points * 100)/100;
+  const q5ok = q5points >= 1; // at least 1 point = acceptable
+  results.q5 = {answer:document.getElementById('q5').value || '(no answer)', ok:q5ok, points:q5points, feedback:key.q5.feedback + ` (keywords matched: ${matchCount})`};
+  earned += q5points;
+
+  // Show results
+  displayResults(name, results, earned, totalPoints);
+
+  // Optionally POST to webhook
+  if(WEBHOOK_URL){
+    try {
+      fetch(WEBHOOK_URL, {
+        method:'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({timestamp: new Date().toISOString(), student:name, results, score:{earned, totalPoints}})
+      }).catch(e => console.warn('Webhook failed', e));
+    } catch(e){ console.warn(e) }
+  }
+
+  // Save draft (with final answers)
+  saveState();
+
+  return {name, results, earned, totalPoints};
+}
+
+function displayResults(name, results, earned, total){
+  document.getElementById('finalCard').style.display='block';
+  const pct = Math.round((earned/total)*100);
+  document.getElementById('finalResult').textContent = `${name} — Score: ${earned}/${total} (${pct}%)`;
+  document.getElementById('scoreDisplay').textContent = `${earned}/${total}`;
+  const df = document.getElementById('detailedFeedback');
+  df.innerHTML = '';
+  Object.keys(results).forEach(q=>{
+    const r = results[q];
+    const el = document.createElement('div');
+    el.style.marginBottom='10px';
+    el.innerHTML = `<strong>${q.toUpperCase()}</strong> — <em>Answer:</em> ${escapeHtml(r.answer)}<br>
+                    <em>Points:</em> ${r.points} — ${r.ok?'<span style="color:green">Correct/Good</span>':'<span style="color:crimson">Needs review</span>'}<br>
+                    <small>${escapeHtml(r.feedback)}</small>`;
+    df.appendChild(el);
+  });
+}
+
+function escapeHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+/* ========== EXPORT ========== */
+function downloadCSV(){
+  const name = (document.getElementById('studentName').value||'').trim();
+  if(!name){ alert('Please enter student name before downloading'); return; }
+  const r = grade(); // grade again to ensure values
+  const ts = new Date().toISOString();
+  const obj = {timestamp:ts, student:r.name, score:`${r.earned}/${r.totalPoints}`, percent: Math.round((r.earned/r.totalPoints)*100)};
+  // flatten results into columns
+  Object.keys(r.results).forEach(k=>{
+    obj[k + '_answer'] = r.results[k].answer;
+    obj[k + '_points'] = r.results[k].points;
+  });
+  // header
+  const headers = Object.keys(obj).join(',');
+  const row = Object.values(obj).map(v => `"${String(v).replace(/"/g,'""')}"`).join(',');
+  const csv = headers + "\n" + row;
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = `${r.name.replace(/\s+/g,'_')}_reading_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+/* ========== UI glue ========== */
+document.getElementById('submitBtn').addEventListener('click', ()=>grade());
+document.getElementById('downloadCSV').addEventListener('click', ()=>downloadCSV());
+document.getElementById('clearBtn').addEventListener('click', ()=>{ if(confirm('Clear saved answers?')) clearAnswers(); });
+document.getElementById('saveName').addEventListener('click', ()=>saveState());
+
+function showSavedName(){
+  const n = (document.getElementById('studentName').value||'').trim();
+  document.getElementById('savedName').textContent = n?`Name saved: ${n}`:'No name yet';
+}
+
+loadState();
+showSavedName();
+
+/* Optional: autosave every 10s */
+setInterval(saveState, 10000);
+</script>
+</body>
+</html>
