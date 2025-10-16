@@ -6,58 +6,61 @@
 <title>Reading Comprehension Practice 1</title>
 <style>
   :root{
-    --bg1: #f6f3ea;
-    --paper: #fffaf2;
-    --ink: #13232b;
-    --accent: #0b6b8a;
-    --warm:#c77a2a;
-    --muted:#6b706f;
-    --card-shadow: 0 12px 30px rgba(20,20,20,0.06);
+    --paper:#fffaf2;
+    --ink:#122028;
+    --muted:#6c6f70;
+    --accent:#0b6b8a;
+    --warm:#b35f18;
+    --card-shadow: 0 14px 40px rgba(12,18,20,0.06);
     --radius:12px;
   }
   *{box-sizing:border-box}
   body{
     margin:0;
-    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-    background: linear-gradient(180deg, #eaf6ff 0%, #fbf8f3 50%);
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+    background: linear-gradient(180deg,#eaf6ff 0%, #fbf8f3 50%);
     color:var(--ink);
     padding:20px;
   }
-
-  .wrap{max-width:920px;margin:10px auto;padding:18px;background:
-    linear-gradient(180deg,var(--paper),#fff);border-radius:14px;box-shadow:var(--card-shadow);border:1px solid rgba(15,20,20,0.03)}
+  .wrap{max-width:960px;margin:12px auto;padding:18px;background:linear-gradient(180deg,var(--paper),#ffffff);border-radius:14px;box-shadow:var(--card-shadow);border:1px solid rgba(6,10,12,0.04)}
   header{display:flex;gap:14px;align-items:center}
-  .logo{width:72px;height:72px;border-radius:12px;background:linear-gradient(180deg,#fff,#fff6ea);display:flex;align-items:center;justify-content:center;border:2px solid rgba(0,0,0,0.03)}
+  .logo{width:76px;height:76px;border-radius:12px;background:linear-gradient(180deg,#fff,#fff7ea);display:flex;align-items:center;justify-content:center;border:2px solid rgba(0,0,0,0.03)}
   h1{margin:0;font-size:20px}
   p.lead{margin:6px 0 0 0;color:var(--muted)}
 
-  .info-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+  .card{background:linear-gradient(180deg,#fff,#fffaf0);padding:14px;border-radius:12px;margin-top:14px;border:1px solid rgba(0,0,0,0.03)}
+  .info-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
   .info-box{flex:1 1 200px;min-width:160px}
-  label{display:block;font-size:13px;font-weight:700;margin-bottom:6px}
+  label{display:block;font-size:13px;font-weight:700;margin-bottom:6px;color:var(--ink)}
   input[type="text"]{width:100%;padding:10px;border-radius:10px;border:1px solid rgba(8,12,14,0.06);background:#fff;font-size:15px}
   .small{font-size:13px;color:var(--muted);margin-top:6px}
 
-  .card{background:linear-gradient(180deg,#fff,#fffaf0);padding:14px;border-radius:12px;margin-top:14px;border:1px solid rgba(0,0,0,0.03)}
-  .passage{font-size:15px;line-height:1.55}
-  .question{margin-top:12px;padding:12px;border-radius:10px;background:linear-gradient(180deg,#fff,#fffef8);border:1px solid rgba(0,0,0,0.02)}
-  .q-title{font-weight:800;margin-bottom:8px}
-  textarea.answer{width:100%;min-height:48px;padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.06);resize:vertical;font-size:15px}
+  .passage{font-size:15px;line-height:1.6;margin-top:10px}
+  .question{margin-top:12px;padding:14px;border-radius:10px;background:linear-gradient(180deg,#fff,#fffef8);border:1px solid rgba(0,0,0,0.02)}
+  .q-title{font-weight:800;margin-bottom:10px}
+  textarea.answer{width:100%;min-height:90px;padding:12px;border-radius:10px;border:1px solid rgba(0,0,0,0.06);resize:vertical;font-size:15px;line-height:1.45}
+  .note{font-size:13px;color:var(--muted);margin-top:8px}
   .actions{display:flex;gap:10px;align-items:center;margin-top:12px}
   .btn{background:linear-gradient(90deg,#0f6c87,#0a4c60);color:white;padding:10px 14px;border-radius:10px;border:none;cursor:pointer;font-weight:800}
   .btn.secondary{background:#fff;border:1px solid rgba(0,0,0,0.06);color:var(--ink);font-weight:700}
   .score-box{margin-left:auto;text-align:right}
   .result{font-weight:900;font-size:18px;color:var(--warm)}
-  .note{font-size:13px;color:var(--muted);margin-top:8px}
+  .percent{font-size:14px;color:var(--muted)}
 
   .hidden{display:none}
 
-  /* responsive */
+  /* formal PDF preview (hidden on main screen) */
+  @media print {
+    body{padding:0;background:#fff}
+    .wrap{box-shadow:none;border:none;margin:0;border-radius:0}
+    header, .actions, #downloadPdfBtn, .btn.secondary, footer { display:none !important; }
+  }
+
   @media (max-width:720px){
     .info-row{flex-direction:column}
     .score-box{margin-left:0;margin-top:8px;text-align:left}
   }
 
-  /* small footer */
   footer{margin-top:12px;text-align:center;color:var(--muted);font-size:13px}
 </style>
 </head>
@@ -65,50 +68,49 @@
   <div class="wrap" role="main" aria-labelledby="title">
     <header>
       <div class="logo" aria-hidden="true">
-        <!-- simple ship icon -->
-        <svg width="48" height="48" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <rect x="2" y="6" width="60" height="44" rx="8" fill="#fff7ea" stroke="#ead7bb" />
+        <svg width="52" height="52" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="3" y="6" width="58" height="44" rx="8" fill="#fff7ea" stroke="#ead7bb" />
           <path d="M10 36c10 6 30 6 44 0" stroke="#c77a2a" stroke-width="3" fill="none" stroke-linecap="round"/>
           <path d="M24 18 L32 10 L40 18" stroke="#0b6b8a" stroke-width="2" fill="none" stroke-linecap="round"/>
         </svg>
       </div>
       <div>
         <h1 id="title">Reading Comprehension Practice 1</h1>
-        <p class="lead">Passage + 6 short-answer questions — auto-graded with partial credit. Download a PDF report after submission.</p>
+        <p class="lead">Grade 5 — Short-answer format. Fill student details, answer in the boxes, then Submit.</p>
       </div>
     </header>
 
     <!-- student info -->
     <section class="card" aria-labelledby="studentinfo">
       <h2 id="studentinfo" style="margin:0;font-size:16px">Student Information</h2>
-      <div class="small">Fill the boxes below before starting the test.</div>
+      <div class="small" style="margin-top:6px">Enter required details (these will appear in the formal PDF report).</div>
 
-      <div class="info-row" style="margin-top:10px">
+      <div class="info-row" style="margin-top:12px">
         <div class="info-box">
           <label for="st-name">Full name</label>
-          <input type="text" id="st-name" placeholder="e.g. Ali Khan" />
+          <input type="text" id="st-name" aria-required="true" />
         </div>
         <div class="info-box">
           <label for="st-class">Class</label>
-          <input type="text" id="st-class" placeholder="e.g. 5" />
+          <input type="text" id="st-class" aria-required="true" />
         </div>
         <div class="info-box">
           <label for="st-section">Section</label>
-          <input type="text" id="st-section" placeholder="e.g. A" />
+          <input type="text" id="st-section" aria-required="true" />
         </div>
         <div class="info-box">
           <label for="st-roll">Roll number</label>
-          <input type="text" id="st-roll" placeholder="e.g. 12" />
+          <input type="text" id="st-roll" aria-required="true" />
         </div>
       </div>
-      <div class="note">Answers are auto-graded. Click <strong>Submit Answers</strong> when you're finished. A download button will appear to save results as PDF.</div>
+      <div class="note">Answer boxes are intentionally blank — write your answers clearly. Partial credit is used where appropriate.</div>
     </section>
 
     <!-- passage -->
-    <section class="card">
-      <h2 style="margin:0;font-size:16px">Passage — Alone on the Island</h2>
-      <p class="small" style="margin-top:6px">Read carefully and answer the questions that follow in simple, clear English.</p>
-      <div class="passage" style="margin-top:10px;">
+    <section class="card" aria-labelledby="passageheading">
+      <h2 id="passageheading" style="margin:0;font-size:16px">Passage — Alone on the Island</h2>
+      <div class="small" style="margin-top:6px">Read the passage carefully before answering.</div>
+      <div class="passage" style="margin-top:10px">
         <em>
         I plunged into the sea and made for the ship. The storm had damaged everything. I went down into the cabins and found an axe. On deck again, I cut the masts and ropes and made myself a small raft. I managed to get this raft into the sea and tie it to the vessel with a rope. I found some of the seamen’s boxes on board and filled them with stores—bread, rice, and cheese. All these I piled on to the raft and, having found a broken oar, I cast off from the vessel and started for the shore. When I reached the sand, I carried the things up on to dry land. The next morning I walked along the shore and up a little hill. From there I could see that I was on an island. I was a prisoner, without a friend in the world! There was no one living on the island but wild beasts.
         </em>
@@ -118,63 +120,62 @@
     <!-- questions -->
     <section id="questions" class="card" aria-labelledby="qheading">
       <h2 id="qheading" style="margin:0;font-size:16px">Questions</h2>
-      <div class="small" style="margin-top:6px">Type your answers in the boxes. Marks awarding uses partial credit for close/partial answers.</div>
+      <div class="small" style="margin-top:6px">Type your answers in the boxes below. Each question is 1 mark; partial credit is applied where appropriate.</div>
 
       <form id="quizForm" onsubmit="return false;" style="margin-top:12px">
         <!-- Q1 -->
         <div class="question" data-qid="q1">
           <div class="q-title">Q1. Suggest a suitable title for this passage. (1 mark)</div>
-          <textarea class="answer" id="a1" placeholder="Write a short title — e.g. Alone on the Island"></textarea>
+          <textarea class="answer" id="a1" aria-label="Answer to question 1"></textarea>
         </div>
 
         <!-- Q2 -->
         <div class="question" data-qid="q2">
           <div class="q-title">Q2. What did the narrator find in the cabins that helped him create a raft? (1 mark)</div>
-          <textarea class="answer" id="a2" placeholder="One-word answer — e.g. axe"></textarea>
+          <textarea class="answer" id="a2" aria-label="Answer to question 2"></textarea>
         </div>
 
         <!-- Q3 -->
         <div class="question" data-qid="q3">
           <div class="q-title">Q3. Name three food items the narrator rescued from the ship. (1 mark)</div>
-          <textarea class="answer" id="a3" placeholder="List three items separated by commas — e.g. bread, rice, cheese"></textarea>
-          <div class="small" style="margin-top:6px">Partial credit: 1/3 for each correct item.</div>
+          <textarea class="answer" id="a3" aria-label="Answer to question 3"></textarea>
+          <div class="small" style="margin-top:6px">Answer in a short list or comma-separated. Partial credit awarded per correct item.</div>
         </div>
 
         <!-- Q4 -->
         <div class="question" data-qid="q4">
           <div class="q-title">Q4. What items did the narrator use to build his small raft? (1 mark)</div>
-          <textarea class="answer" id="a4" placeholder="e.g. masts and ropes"></textarea>
-          <div class="small" style="margin-top:6px">Partial credit: points divided across listed correct items (masts, ropes).</div>
+          <textarea class="answer" id="a4" aria-label="Answer to question 4"></textarea>
         </div>
 
         <!-- Q5 -->
         <div class="question" data-qid="q5">
           <div class="q-title">Q5. How did the narrator describe his situation after he realized he was on an island? (1 mark)</div>
-          <textarea class="answer" id="a5" placeholder="Write a brief sentence — e.g. He felt like a prisoner, without a friend..."></textarea>
-          <div class="small" style="margin-top:6px">Partial credit: look for key phrases such as "prisoner", "without a friend", "wild beasts".</div>
+          <textarea class="answer" id="a5" aria-label="Answer to question 5"></textarea>
+          <div class="small" style="margin-top:6px">Key ideas to include (for full credit): 'prisoner', 'without a friend', 'wild beasts'.</div>
         </div>
 
         <!-- Q6 -->
         <div class="question" data-qid="q6">
           <div class="q-title">Q6. If you found yourself alone on an island like the narrator, which one thing that he rescued (bread, rice, cheese, or the axe) would you want most, and why? (1 mark)</div>
-          <textarea class="answer" id="a6" placeholder="Name one item (bread / rice / cheese / axe) and explain in 1–2 short sentences"></textarea>
-          <div class="small" style="margin-top:6px">Partial credit: 1 mark if item chosen is from the four and a short reason is given; 0.5 if only item named or only a reason provided.</div>
+          <textarea class="answer" id="a6" aria-label="Answer to question 6"></textarea>
+          <div class="small" style="margin-top:6px">Include one item name (bread / rice / cheese / axe) and 1–2 short reasons for credit.</div>
         </div>
 
         <div class="actions">
           <button class="btn" id="submitBtn" onclick="gradeAndShow()">Submit Answers</button>
           <button class="btn secondary" id="clearBtn" onclick="clearAll()" type="button">Clear answers</button>
-          <div class="score-box">
-            <div id="scoredisp" class="result" aria-live="polite"></div>
-            <div id="percentdisp" class="small"></div>
+          <div class="score-box" aria-live="polite">
+            <div id="scoredisp" class="result"></div>
+            <div id="percentdisp" class="percent"></div>
           </div>
         </div>
       </form>
 
       <!-- after submit -->
-      <div id="afterSubmit" class="hidden" style="margin-top:12px">
-        <div class="note">Results are private. You may download the full report (includes correct answers) below.</div>
-        <div style="margin-top:8px;display:flex;gap:10px;align-items:center">
+      <div id="afterSubmit" class="hidden" style="margin-top:14px">
+        <div class="note">You may download a formal report (PDF) that contains your answers and the official correct answers for teacher review.</div>
+        <div style="margin-top:10px;display:flex;gap:10px;align-items:center">
           <button class="btn" id="downloadPdfBtn" onclick="downloadPDFReport()">Download Results (PDF)</button>
           <button class="btn secondary" onclick="window.location.reload()">Start New / Refresh</button>
         </div>
@@ -183,15 +184,15 @@
     </section>
 
     <footer>
-      <small>Designed for Grade 5 reading practice — client-side only. For secure record-keeping use a server webhook (optional).</small>
+      <small>Client-side grading only. For institutional record-keeping or tamper-resistant collection use a server endpoint.</small>
     </footer>
   </div>
 
 <script>
-/* ================= utilities ================= */
+/* ================= helpers ================= */
 function normalize(s){ return String(s||'').trim().toLowerCase(); }
 
-// simple Levenshtein distance for fuzzy matching
+// Levenshtein distance for fuzzy matching
 function levenshtein(a,b){
   a=String(a||''); b=String(b||'');
   if(a===b) return 0;
@@ -212,39 +213,41 @@ function levenshtein(a,b){
   return dp[m];
 }
 
-// fuzzy match with small threshold
+// fuzzy equals with threshold
 function fuzzyEquals(ans, target){
   ans = normalize(ans); target = normalize(target);
   if(!ans || !target) return false;
   if(ans === target) return true;
   if(ans.includes(target) || target.includes(ans)) return true;
+  // allow small typos
   return levenshtein(ans, target) <= 2;
 }
 
-/* ============== answer key & scoring rules ============== */
+/* ================= KEY & scoring rules ================= */
 /*
-We follow the user's provided key. Each question is worth 1 mark.
-Partial credit rules:
-- Q1 (title): Acceptable titles list; fuzzy match => full point. If includes main words like 'alone', 'island', 'raft', partial 0.5.
-- Q2 (axe): fuzzy match 'axe' => full point.
-- Q3 (bread, rice, cheese): 1/3 point per correct item.
-- Q4 (masts, ropes): 0.5 each for 'masts' and 'ropes' (total 1).
-- Q5 (description): check for key phrases: 'prisoner', 'without a friend', 'wild beasts' -> award fraction = matches/3.
-- Q6 (subjective): must name one of (bread, rice, cheese, axe) and give reason (>=4 words). If both present =>1, else 0.5 for item only or reason only.
+All questions 1 mark each. Partial credit rules:
+- Q1 (title): If the student's title matches a known accepted title (fuzzy) => 1.
+  Otherwise count keywords: keywords = [alone,island,raft,prisoner,shore,survival]
+  If >=2 keywords present => 1; if 1 keyword present => 0.5
+- Q2 (axe): fuzzy match 'axe' or includes 'axe' => 1 else 0
+- Q3 (bread,rice,cheese): 1/3 for each correct item found (max 1)
+- Q4 (masts,ropes): 0.5 each (mast(s), rope(s)) total max 1
+- Q5 (prisoner,without a friend,wild beasts): 1/3 for each phrase or keyword matched (max 1)
+- Q6 (choice + reason): if student mentions one of allowed items AND includes at least 3 words explanation => 1
+  If item present but no reason OR reason present without allowed item => 0.5
 */
-
 const KEY = {
-  q1: {accepts: ['alone on the island','robinson\'s survival','building a raft','a prisoner on the shore','alone on the shore','island survival'], worth:1},
-  q2: {accepts: ['axe','an axe','a axe'], worth:1},
-  q3: {items: ['bread','rice','cheese'], worth:1},
-  q4: {items: ['masts','mast','ropes','rope'], worth:1},
-  q5: {phrases: ['prisoner','without a friend','wild beasts'], worth:1},
-  q6: {choices: ['bread','rice','cheese','axe'], worth:1}
+  q1: {accepted: ['alone on the island','robinson\'s survival','building a raft','a prisoner on the shore','island survival'], keywords: ['alone','island','raft','prisoner','shore','survival']},
+  q2: {accepted: ['axe']},
+  q3: {items: ['bread','rice','cheese']},
+  q4: {items: ['mast','masts','rope','ropes']},
+  q5: {phrases: ['prisoner','without a friend','wild beasts']},
+  q6: {choices: ['bread','rice','cheese','axe']}
 };
 
-/* ================= grading ================= */
+/* ================= grading function ================= */
 function gradeAndShow(){
-  // require name and roll/class/section
+  // require personal info
   const name = document.getElementById('st-name').value.trim();
   const clas = document.getElementById('st-class').value.trim();
   const section = document.getElementById('st-section').value.trim();
@@ -255,113 +258,111 @@ function gradeAndShow(){
   }
 
   // collect answers
-  const a1 = document.getElementById('a1').value.trim();
-  const a2 = document.getElementById('a2').value.trim();
-  const a3 = document.getElementById('a3').value.trim();
-  const a4 = document.getElementById('a4').value.trim();
-  const a5 = document.getElementById('a5').value.trim();
-  const a6 = document.getElementById('a6').value.trim();
+  const a1 = normalize(document.getElementById('a1').value);
+  const a2 = normalize(document.getElementById('a2').value);
+  const a3 = normalize(document.getElementById('a3').value);
+  const a4 = normalize(document.getElementById('a4').value);
+  const a5 = normalize(document.getElementById('a5').value);
+  const a6 = normalize(document.getElementById('a6').value);
 
-  const results = {}; // will store per-question details for PDF
+  const results = {};
   let total = 0;
 
-  // Q1: title
+  // Q1 title scoring
   (function(){
-    const ans = normalize(a1);
     let score = 0;
     let matched = null;
-    for(const t of KEY.q1.accepts){
-      if(fuzzyEquals(ans, t)){ score = KEY.q1.worth; matched = t; break; }
-    }
-    if(score === 0){
-      // partial: if contains 'alone' or 'island' or 'raft' or 'shore' etc.
-      const partialWords = ['alone','island','raft','shore','prisoner','survival'];
-      for(const w of partialWords){
-        if(ans.includes(w)){ score = 0.5; matched = `partial:${w}`; break; }
+    if(a1){
+      for(const t of KEY.q1.accepted){
+        if(fuzzyEquals(a1, t)){ score = 1; matched = t; break; }
+      }
+      if(score === 0){
+        // count keyword hits
+        let kwCount = 0;
+        KEY.q1.keywords.forEach(k => { if(a1.includes(k)) kwCount++; });
+        if(kwCount >= 2) score = 1;
+        else if(kwCount === 1) score = 0.5;
       }
     }
-    results.q1 = {question: 'Suggest a suitable title for this passage.', student: a1 || '(no answer)', correct: KEY.q1.accepts[0], score};
+    results.q1 = {question: 'Suggest a suitable title for this passage.', student: document.getElementById('a1').value || '(no answer)', correct: 'Any appropriate title (e.g. Alone on the Island)', score};
     total += score;
   })();
 
-  // Q2: axe
+  // Q2 axe
   (function(){
-    const ans = normalize(a2);
     let score = 0;
-    if(fuzzyEquals(ans, 'axe') || ans.includes('axe')) score = 1;
-    results.q2 = {question:'What did the narrator find in the cabins that helped him create a raft?', student: a2 || '(no answer)', correct:'axe', score};
+    if(a2 && (a2.includes('axe') || fuzzyEquals(a2, 'axe'))) score = 1;
+    results.q2 = {question:'What did the narrator find in the cabins that helped him create a raft?', student: document.getElementById('a2').value || '(no answer)', correct:'axe', score};
     total += score;
   })();
 
-  // Q3: three food items
+  // Q3 three food items
   (function(){
-    const raw = normalize(a3);
     let score = 0;
     const found = {};
-    KEY.q3.items.forEach(i => { if(raw.includes(i)) { found[i]=true; score += (1/KEY.q3.items.length); }});
-    // round to 2 decimals
-    score = Math.round(score*100)/100;
-    results.q3 = {question:'Name three food items the narrator rescued from the ship.', student: a3 || '(no answer)', correct:'bread, rice, cheese', score, details: found};
-    total += score;
-  })();
-
-  // Q4: masts and ropes
-  (function(){
-    const raw = normalize(a4);
-    let score = 0;
-    // check masts / mast
-    if(raw.includes('mast') || raw.includes('masts')) score += 0.5;
-    if(raw.includes('rope') || raw.includes('ropes')) score += 0.5;
-    score = Math.round(score*100)/100;
-    results.q4 = {question:'What items did the narrator use to build his small raft?', student: a4 || '(no answer)', correct:'masts and ropes', score};
-    total += score;
-  })();
-
-  // Q5: description phrases
-  (function(){
-    const raw = normalize(a5);
-    let matches = 0;
-    const phrases = KEY.q5.phrases;
-    for(const p of phrases){
-      if(raw.includes(p) || fuzzyEquals(raw, p) || raw.includes(p.split(' ')[0])) matches++;
+    if(a3){
+      KEY.q3.items.forEach(item => {
+        if(a3.includes(item)) { found[item]=true; score += (1/KEY.q3.items.length); }
+      });
     }
-    // cap by length
-    const score = Math.round((matches / phrases.length) * KEY.q5.worth * 100)/100;
-    results.q5 = {question:'How did the narrator describe his situation after he realized he was on an island?', student: a5 || '(no answer)', correct: 'He described himself as a prisoner, without a friend in the world; no one was on the island but wild beasts.', score, matches};
+    score = Math.round(score*100)/100;
+    results.q3 = {question:'Name three food items the narrator rescued from the ship.', student: document.getElementById('a3').value || '(no answer)', correct: 'bread, rice, cheese', score, found};
     total += score;
   })();
 
-  // Q6: choose one and reason
+  // Q4 masts & ropes
   (function(){
-    const raw = normalize(a6);
+    let score = 0;
+    if(a4){
+      if(a4.includes('mast') || a4.includes('masts')) score += 0.5;
+      if(a4.includes('rope') || a4.includes('ropes')) score += 0.5;
+    }
+    score = Math.round(score*100)/100;
+    results.q4 = {question:'What items did the narrator use to build his small raft?', student: document.getElementById('a4').value || '(no answer)', correct:'masts and ropes', score};
+    total += score;
+  })();
+
+  // Q5 description
+  (function(){
+    let matches = 0;
+    if(a5){
+      KEY.q5.phrases.forEach(p => {
+        if(a5.includes(p) || fuzzyEquals(a5, p) || a5.includes(p.split(' ')[0])) matches++;
+      });
+    }
+    const score = Math.round((matches / KEY.q5.phrases.length) * 100)/100;
+    results.q5 = {question:'How did the narrator describe his situation after he realized he was on an island?', student: document.getElementById('a5').value || '(no answer)', correct:'He described himself as a prisoner, without a friend; only wild beasts lived there.', score, matches};
+    total += score;
+  })();
+
+  // Q6 choice + reason
+  (function(){
     let score = 0;
     let chosen = null;
-    for(const c of KEY.q6.choices){
-      if(raw.includes(c)) { chosen = c; break; }
+    if(a6){
+      for(const c of KEY.q6.choices){ if(a6.includes(c)){ chosen = c; break; } }
+      const words = a6.split(/\s+/).filter(Boolean);
+      const reasonLen = words.length >= 4; // loose heuristic: >=4 words counts as a reason
+      if(chosen && reasonLen) score = 1;
+      else if(chosen || reasonLen) score = 0.5;
     }
-    // simple heuristic for reason: count words after item (or presence of verbs)
-    const words = raw.split(/\s+/).filter(Boolean);
-    const reasonWords = words.length >= 5 ? true : false; // approx
-    if(chosen && reasonWords) score = 1;
-    else if(chosen || reasonWords) score = 0.5;
-    results.q6 = {question:'If you found yourself alone on an island... which one thing and why?', student: a6 || '(no answer)', correct:'Any one of: bread, rice, cheese, or the axe (with reason)', score, chosen};
+    results.q6 = {question:'Which one thing would you want most and why?', student: document.getElementById('a6').value || '(no answer)', correct:'One of: bread / rice / cheese / axe (with reason)', score, chosen};
     total += score;
   })();
 
-  // Round total to 2 decimals
+  // finalize
   total = Math.round(total*100)/100;
-  // Maximum possible: 6
   const max = 6;
   const percent = Math.round((total/max)*100);
 
-  // show on-screen results summary (no correct answers shown on-screen)
+  // display onscreen summary (do NOT show correct answers)
   document.getElementById('scoredisp').textContent = `Score: ${total} / ${max}`;
   document.getElementById('percentdisp').textContent = `${percent}%`;
   document.getElementById('afterSubmit').classList.remove('hidden');
 
-  // store report payload in window for PDF generation
+  // store report payload for PDF generation
   window.__rc_report = {
-    student:{name, class:clas, section, roll},
+    student: {name, class: clas, section, roll},
     timestamp: new Date().toISOString(),
     results,
     total,
@@ -369,17 +370,24 @@ function gradeAndShow(){
     percent
   };
 
-  // scroll into view download button
-  document.getElementById('downloadPdfBtn').scrollIntoView({behavior:'smooth'});
-
-  // optionally disable submit to prevent re-submit accidentally
+  // disable submit to prevent accidental resubmission
   document.getElementById('submitBtn').disabled = true;
 }
 
 /* ================= clear function ================= */
 function clearAll(){
   if(!confirm('Clear all answers and student info?')) return;
-  document.getElementById('quizForm').reset();
+  // clear inputs and answers
+  document.getElementById('st-name').value = '';
+  document.getElementById('st-class').value = '';
+  document.getElementById('st-section').value = '';
+  document.getElementById('st-roll').value = '';
+  document.getElementById('a1').value = '';
+  document.getElementById('a2').value = '';
+  document.getElementById('a3').value = '';
+  document.getElementById('a4').value = '';
+  document.getElementById('a5').value = '';
+  document.getElementById('a6').value = '';
   document.getElementById('scoredisp').textContent = '';
   document.getElementById('percentdisp').textContent = '';
   document.getElementById('afterSubmit').classList.add('hidden');
@@ -387,98 +395,104 @@ function clearAll(){
   window.__rc_report = null;
 }
 
-/* ================= PDF / PRINT report generation ================= */
+/* ================= PDF / REPORT generation ================= */
 function downloadPDFReport(){
   const rpt = window.__rc_report;
-  if(!rpt){
-    alert('No report found. Submit first.');
-    return;
-  }
+  if(!rpt){ alert('Please submit answers first.'); return; }
 
-  // Build a clean printable HTML
-  const docTitle = `Reading_Comprehension_Practice1_${rpt.student.name.replace(/\s+/g,'_')}`;
+  // formal CSS for PDF
   const css = `
-    body{font-family: Arial, Helvetica, sans-serif;color:#111;margin:20px}
-    h1{font-size:20px;margin-bottom:6px}
-    .meta{font-size:13px;color:#444;margin-bottom:12px}
-    .summary{margin-top:8px;margin-bottom:14px}
-    table{width:100%;border-collapse:collapse;margin-top:8px}
-    th,td{border:1px solid #ddd;padding:8px;text-align:left;font-size:13px}
-    th{background:#f7f7f7}
-    .ok{color:green;font-weight:700}
-    .bad{color:#b33;font-weight:700}
-    .small{font-size:12px;color:#555}
+    body{font-family: "Times New Roman", Georgia, serif; color:#111; margin:18px;}
+    header{display:flex;justify-content:space-between;align-items:flex-start}
+    h1{font-size:20px;margin:0 0 6px 0}
+    .meta{font-size:13px;color:#222;margin-top:6px}
+    .line{height:1px;background:#ddd;margin:10px 0}
+    table{width:100%;border-collapse:collapse;margin-top:12px}
+    th,td{border:1px solid #bbb;padding:8px;font-size:13px;vertical-align:top}
+    th{background:#f3f3f3;font-weight:700}
+    .small{font-size:12px;color:#444}
+    .score{font-size:16px;font-weight:700;color:#333}
+    .footer{font-size:12px;color:#444;margin-top:18px}
   `;
 
-  // Build rows for questions
-  let rows = '';
-  const res = rpt.results;
+  // build table rows
   const order = ['q1','q2','q3','q4','q5','q6'];
+  let rows = '';
   order.forEach((k, idx) => {
-    const r = res[k];
-    let ok = (r.score >= 1) || ( (r.score>0) && (k==='q3' || k==='q4' || k==='q5') ); // consider partial as not full
-    // But mark as Correct only if full mark
-    const correctFlag = r.score >= 1 ? '<span class="ok">Correct</span>' : `<span class="bad">Incorrect / Partial</span>`;
+    const r = rpt.results[k];
+    const markStr = (typeof r.score === 'number') ? String(r.score) : r.score;
+    const resultLabel = (r.score >= 1) ? 'Full' : (r.score > 0 ? 'Partial' : 'None');
     rows += `<tr>
-      <th style="width:6%">${idx+1}</th>
-      <td style="width:36%"><strong>${escapeHtml(r.question)}</strong><div class="small">Correct answer: ${escapeHtml(r.correct)}</div></td>
+      <td style="width:6%">${idx+1}</td>
+      <td style="width:36%"><div style="font-weight:700">${escapeHtml(r.question)}</div><div class="small" style="margin-top:6px"><strong>Answer key:</strong> ${escapeHtml(r.correct)}</div></td>
       <td style="width:34%">${escapeHtml(r.student)}</td>
-      <td style="width:12%">${r.score}</td>
-      <td style="width:12%">${correctFlag}</td>
+      <td style="width:8%">${markStr}</td>
+      <td style="width:16%">${resultLabel}</td>
     </tr>`;
   });
 
   const html = `
     <html>
-    <head>
-      <title>${docTitle}</title>
-      <meta charset="utf-8" />
-      <style>${css}</style>
-    </head>
+    <head><meta charset="utf-8"><title>Report - ${escapeHtml(rpt.student.name)}</title><style>${css}</style></head>
     <body>
-      <h1>Reading Comprehension Practice 1 — Result</h1>
-      <div class="meta">
-        <div><strong>Name:</strong> ${escapeHtml(rpt.student.name)}</div>
-        <div><strong>Class:</strong> ${escapeHtml(rpt.student.class)} &nbsp;&nbsp; <strong>Section:</strong> ${escapeHtml(rpt.student.section)} &nbsp;&nbsp; <strong>Roll:</strong> ${escapeHtml(rpt.student.roll)}</div>
-        <div class="small"><strong>Generated:</strong> ${new Date(rpt.timestamp).toLocaleString()}</div>
-      </div>
+      <header>
+        <div>
+          <h1>Reading Comprehension Practice 1 — Result Report</h1>
+          <div class="meta">Class Test • Grade 5</div>
+        </div>
+        <div style="text-align:right">
+          <div class="meta"><strong>Date:</strong> ${new Date(rpt.timestamp).toLocaleString()}</div>
+          <div class="meta"><strong>Generated by:</strong> ReadingComprehensionPractice1</div>
+        </div>
+      </header>
 
-      <div class="summary">
-        <div><strong>Score:</strong> ${rpt.total} / ${rpt.max} &nbsp;&nbsp; <strong>Percentage:</strong> ${rpt.percent}%</div>
-      </div>
+      <div class="line"></div>
 
-      <table>
-        <thead><tr><th>#</th><th>Question & Correct Answer</th><th>Student Answer</th><th>Marks</th><th>Result</th></tr></thead>
+      <section>
+        <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start">
+          <div style="flex:1">
+            <div><strong>Name:</strong> ${escapeHtml(rpt.student.name)}</div>
+            <div><strong>Class:</strong> ${escapeHtml(rpt.student.class)} — <strong>Section:</strong> ${escapeHtml(rpt.student.section)}</div>
+            <div><strong>Roll No:</strong> ${escapeHtml(rpt.student.roll)}</div>
+          </div>
+          <div style="text-align:right">
+            <div class="score">Score: ${rpt.total} / ${rpt.max}</div>
+            <div class="small">Percentage: ${rpt.percent}%</div>
+          </div>
+        </div>
+      </section>
+
+      <table aria-label="Answers table">
+        <thead><tr><th>#</th><th>Question & Answer Key</th><th>Student Answer</th><th>Marks</th><th>Result</th></tr></thead>
         <tbody>${rows}</tbody>
       </table>
 
-      <p style="margin-top:18px" class="small">Note: This report shows correct answers for teacher reference. Students may keep this PDF for their records.</p>
+      <div class="footer">
+        <p><strong>Teacher notes:</strong> The table above shows the official correct answers and marks assigned by the auto-grader (partial marks may have been awarded for acceptable alternatives). Teachers should review long or ambiguous responses for final confirmation.</p>
+      </div>
     </body>
     </html>
   `;
 
-  // Open printable window and trigger print
   const w = window.open('', '_blank');
   w.document.open();
   w.document.write(html);
   w.document.close();
 
-  // Give a short delay to allow resources to load, then call print
-  setTimeout(()=> {
-    try{
+  // give the print dialog a moment
+  setTimeout(() => {
+    try {
       w.focus();
       w.print();
-      // keep the window open for the user; they can also use browser Save As PDF
-    } catch (e){
-      console.warn('Auto print failed', e);
-      alert('Your browser blocked automatic printing. A new tab with the report has opened — please use its Print / Save as PDF function.');
+    } catch (e) {
+      alert('A new tab has opened with the formal report. Use its Print → Save as PDF to download.');
     }
-  }, 400);
+  }, 450);
 }
 
 /* helper escape */
-function escapeHtml(s){
-  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+function escapeHtml(str){
+  return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 </script>
 </body>
