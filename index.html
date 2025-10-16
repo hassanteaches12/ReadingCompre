@@ -3,379 +3,483 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Grade 5 Reading Comprehension — AutoMark</title>
+<title>Reading Comprehension Practice 1</title>
 <style>
-  /* Simple kid-friendly styling — edit as you wish */
-  :root{font-family: system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial; --card:#fff; --bg:#f5f9ff; --accent:#2b6cb0;}
-  body{margin:0;background:linear-gradient(180deg,var(--bg),#ffffff);padding:24px;color:#123;}
-  .wrap{max-width:860px;margin:0 auto}
-  header{display:flex;gap:16px;align-items:center;margin-bottom:18px}
-  h1{margin:0;font-size:1.6rem}
-  .card{background:var(--card);box-shadow:0 6px 18px rgba(18,28,48,0.08);border-radius:12px;padding:18px;margin-bottom:14px}
-  p.lead{margin:0 0 12px 0;color:#234}
-  .question{margin-bottom:14px;padding:12px;border-radius:8px;background:linear-gradient(180deg,#fff,#f7fbff)}
-  label.option{display:block;padding:8px;border-radius:8px;margin:6px 0;cursor:pointer}
-  input[type="text"]{width:100%;padding:8px;border-radius:6px;border:1px solid #d0d7e6}
-  .btn{display:inline-block;padding:8px 12px;border-radius:8px;background:var(--accent);color:white;border:none;cursor:pointer}
-  .btn.secondary{background:#e2eefc;color:var(--accent);border:1px solid rgba(43,108,176,0.12)}
-  .result{font-weight:700}
-  .feedback{margin-top:6px;padding:8px;border-radius:6px;background:#f0fbf7;color:#064;display:none}
-  .wrong{background:#fff6f6;color:#8a1f1f;display:none}
-  footer{margin-top:20px;text-align:center;color:#546}
-  .meta{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-  pre.small{background:#f8f9fb;padding:8px;border-radius:6px;font-size:0.9rem;overflow:auto}
+  :root{
+    --bg1: #f6f3ea;
+    --paper: #fffaf2;
+    --ink: #13232b;
+    --accent: #0b6b8a;
+    --warm:#c77a2a;
+    --muted:#6b706f;
+    --card-shadow: 0 12px 30px rgba(20,20,20,0.06);
+    --radius:12px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background: linear-gradient(180deg, #eaf6ff 0%, #fbf8f3 50%);
+    color:var(--ink);
+    padding:20px;
+  }
+
+  .wrap{max-width:920px;margin:10px auto;padding:18px;background:
+    linear-gradient(180deg,var(--paper),#fff);border-radius:14px;box-shadow:var(--card-shadow);border:1px solid rgba(15,20,20,0.03)}
+  header{display:flex;gap:14px;align-items:center}
+  .logo{width:72px;height:72px;border-radius:12px;background:linear-gradient(180deg,#fff,#fff6ea);display:flex;align-items:center;justify-content:center;border:2px solid rgba(0,0,0,0.03)}
+  h1{margin:0;font-size:20px}
+  p.lead{margin:6px 0 0 0;color:var(--muted)}
+
+  .info-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+  .info-box{flex:1 1 200px;min-width:160px}
+  label{display:block;font-size:13px;font-weight:700;margin-bottom:6px}
+  input[type="text"]{width:100%;padding:10px;border-radius:10px;border:1px solid rgba(8,12,14,0.06);background:#fff;font-size:15px}
+  .small{font-size:13px;color:var(--muted);margin-top:6px}
+
+  .card{background:linear-gradient(180deg,#fff,#fffaf0);padding:14px;border-radius:12px;margin-top:14px;border:1px solid rgba(0,0,0,0.03)}
+  .passage{font-size:15px;line-height:1.55}
+  .question{margin-top:12px;padding:12px;border-radius:10px;background:linear-gradient(180deg,#fff,#fffef8);border:1px solid rgba(0,0,0,0.02)}
+  .q-title{font-weight:800;margin-bottom:8px}
+  textarea.answer{width:100%;min-height:48px;padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.06);resize:vertical;font-size:15px}
+  .actions{display:flex;gap:10px;align-items:center;margin-top:12px}
+  .btn{background:linear-gradient(90deg,#0f6c87,#0a4c60);color:white;padding:10px 14px;border-radius:10px;border:none;cursor:pointer;font-weight:800}
+  .btn.secondary{background:#fff;border:1px solid rgba(0,0,0,0.06);color:var(--ink);font-weight:700}
+  .score-box{margin-left:auto;text-align:right}
+  .result{font-weight:900;font-size:18px;color:var(--warm)}
+  .note{font-size:13px;color:var(--muted);margin-top:8px}
+
+  .hidden{display:none}
+
+  /* responsive */
+  @media (max-width:720px){
+    .info-row{flex-direction:column}
+    .score-box{margin-left:0;margin-top:8px;text-align:left}
+  }
+
+  /* small footer */
+  footer{margin-top:12px;text-align:center;color:var(--muted);font-size:13px}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='44' height='44'><rect rx='8' width='44' height='44' fill='%232b6cb0'/><text x='50%' y='54%' font-size='22' font-family='Arial' fill='white' text-anchor='middle'>R</text></svg>" alt="" />
-    <div>
-      <h1>Reading Comprehension — Grade 5</h1>
-      <div class="meta"><small>Time: 25 mins • Auto-marking enabled</small></div>
-    </div>
-  </header>
-
-  <section class="card" id="instructions">
-    <p class="lead">Read the passage carefully, then answer the questions below. Type your name before starting. Use full sentences for the short answers.</p>
-    <div style="display:flex;gap:10px;align-items:center">
-      <input id="studentName" placeholder="Student name" type="text" />
-      <button class="btn secondary" id="saveName">Save name</button>
-      <div id="savedName" style="margin-left:auto;color:#345"></div>
-    </div>
-  </section>
-
-  <section class="card" id="passage">
-    <h3>Passage</h3>
-    <p>
-      One spring morning, Zahra woke to the sound of birds and a surprising knock. At her doorstep sat an old, patched book with no name on it.
-      When she opened it she found pages of maps and tiny drawings of places she had never seen. The last page held a short note:
-      "For the brave who reads." Zahra decided to follow the map, and so began a small adventure that changed how she saw the city.
-    </p>
-  </section>
-
-  <form id="quiz">
-    <!-- Q1: multiple choice -->
-    <div class="question" data-qid="q1" data-type="mcq">
-      <strong>1. What did Zahra hear on the morning of the story?</strong>
-      <div>
-        <label class="option"><input type="radio" name="q1" value="a" /> Dogs barking</label>
-        <label class="option"><input type="radio" name="q1" value="b" /> Birds</label>
-        <label class="option"><input type="radio" name="q1" value="c" /> Thunder</label>
-        <label class="option"><input type="radio" name="q1" value="d" /> A trumpet</label>
+  <div class="wrap" role="main" aria-labelledby="title">
+    <header>
+      <div class="logo" aria-hidden="true">
+        <!-- simple ship icon -->
+        <svg width="48" height="48" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="2" y="6" width="60" height="44" rx="8" fill="#fff7ea" stroke="#ead7bb" />
+          <path d="M10 36c10 6 30 6 44 0" stroke="#c77a2a" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M24 18 L32 10 L40 18" stroke="#0b6b8a" stroke-width="2" fill="none" stroke-linecap="round"/>
+        </svg>
       </div>
-      <div class="feedback" id="fb-q1"></div>
-    </div>
+      <div>
+        <h1 id="title">Reading Comprehension Practice 1</h1>
+        <p class="lead">Passage + 6 short-answer questions — auto-graded with partial credit. Download a PDF report after submission.</p>
+      </div>
+    </header>
 
-    <!-- Q2: short answer (accept synonyms) -->
-    <div class="question" data-qid="q2" data-type="short">
-      <strong>2. What was at Zahra's doorstep?</strong>
-      <input type="text" name="q2" id="q2" placeholder="Write your answer..." />
-      <div class="feedback" id="fb-q2"></div>
-    </div>
+    <!-- student info -->
+    <section class="card" aria-labelledby="studentinfo">
+      <h2 id="studentinfo" style="margin:0;font-size:16px">Student Information</h2>
+      <div class="small">Fill the boxes below before starting the test.</div>
 
-    <!-- Q3: checkbox (multiple correct) -->
-    <div class="question" data-qid="q3" data-type="checkbox">
-      <strong>3. Which of the following were in the old book? (choose all that apply)</strong>
-      <label class="option"><input type="checkbox" name="q3" value="maps" /> Maps</label>
-      <label class="option"><input type="checkbox" name="q3" value="tiny drawings" /> Tiny drawings</label>
-      <label class="option"><input type="checkbox" name="q3" value="money" /> Money</label>
-      <label class="option"><input type="checkbox" name="q3" value="flowers" /> Flowers</label>
-      <div class="feedback" id="fb-q3"></div>
-    </div>
+      <div class="info-row" style="margin-top:10px">
+        <div class="info-box">
+          <label for="st-name">Full name</label>
+          <input type="text" id="st-name" placeholder="e.g. Ali Khan" />
+        </div>
+        <div class="info-box">
+          <label for="st-class">Class</label>
+          <input type="text" id="st-class" placeholder="e.g. 5" />
+        </div>
+        <div class="info-box">
+          <label for="st-section">Section</label>
+          <input type="text" id="st-section" placeholder="e.g. A" />
+        </div>
+        <div class="info-box">
+          <label for="st-roll">Roll number</label>
+          <input type="text" id="st-roll" placeholder="e.g. 12" />
+        </div>
+      </div>
+      <div class="note">Answers are auto-graded. Click <strong>Submit Answers</strong> when you're finished. A download button will appear to save results as PDF.</div>
+    </section>
 
-    <!-- Q4: cloze / fill -->
-    <div class="question" data-qid="q4" data-type="cloze">
-      <strong>4. Complete the sentence: The last page held a short ______.</strong>
-      <input type="text" name="q4" id="q4" placeholder="one word" />
-      <div class="feedback" id="fb-q4"></div>
-    </div>
+    <!-- passage -->
+    <section class="card">
+      <h2 style="margin:0;font-size:16px">Passage — Alone on the Island</h2>
+      <p class="small" style="margin-top:6px">Read carefully and answer the questions that follow in simple, clear English.</p>
+      <div class="passage" style="margin-top:10px;">
+        <em>
+        I plunged into the sea and made for the ship. The storm had damaged everything. I went down into the cabins and found an axe. On deck again, I cut the masts and ropes and made myself a small raft. I managed to get this raft into the sea and tie it to the vessel with a rope. I found some of the seamen’s boxes on board and filled them with stores—bread, rice, and cheese. All these I piled on to the raft and, having found a broken oar, I cast off from the vessel and started for the shore. When I reached the sand, I carried the things up on to dry land. The next morning I walked along the shore and up a little hill. From there I could see that I was on an island. I was a prisoner, without a friend in the world! There was no one living on the island but wild beasts.
+        </em>
+      </div>
+    </section>
 
-    <!-- Q5: long answer (teacher graded but we give keyword hints) -->
-    <div class="question" data-qid="q5" data-type="long">
-      <strong>5. In 2–3 sentences, explain why Zahra decided to follow the map.</strong>
-      <textarea name="q5" id="q5" rows="4" style="width:100%;padding:8px;border-radius:6px;border:1px solid #d0d7e6"></textarea>
-      <small>Teacher will review this; we will show keyword match score automatically.</small>
-      <div class="feedback" id="fb-q5"></div>
-    </div>
+    <!-- questions -->
+    <section id="questions" class="card" aria-labelledby="qheading">
+      <h2 id="qheading" style="margin:0;font-size:16px">Questions</h2>
+      <div class="small" style="margin-top:6px">Type your answers in the boxes. Marks awarding uses partial credit for close/partial answers.</div>
 
-    <div style="display:flex;gap:8px;align-items:center;margin-top:12px">
-      <button type="button" class="btn" id="submitBtn">Submit & Grade</button>
-      <button type="button" class="btn secondary" id="clearBtn">Clear answers</button>
-      <button type="button" class="btn secondary" id="downloadCSV">Download CSV</button>
-      <div style="margin-left:auto"><strong id="scoreDisplay"></strong></div>
-    </div>
-  </form>
+      <form id="quizForm" onsubmit="return false;" style="margin-top:12px">
+        <!-- Q1 -->
+        <div class="question" data-qid="q1">
+          <div class="q-title">Q1. Suggest a suitable title for this passage. (1 mark)</div>
+          <textarea class="answer" id="a1" placeholder="Write a short title — e.g. Alone on the Island"></textarea>
+        </div>
 
-  <div id="finalCard" class="card" style="display:none;margin-top:14px">
-    <h3>Result</h3>
-    <p class="result" id="finalResult"></p>
-    <p><strong>Detailed feedback:</strong></p>
-    <div id="detailedFeedback"></div>
+        <!-- Q2 -->
+        <div class="question" data-qid="q2">
+          <div class="q-title">Q2. What did the narrator find in the cabins that helped him create a raft? (1 mark)</div>
+          <textarea class="answer" id="a2" placeholder="One-word answer — e.g. axe"></textarea>
+        </div>
+
+        <!-- Q3 -->
+        <div class="question" data-qid="q3">
+          <div class="q-title">Q3. Name three food items the narrator rescued from the ship. (1 mark)</div>
+          <textarea class="answer" id="a3" placeholder="List three items separated by commas — e.g. bread, rice, cheese"></textarea>
+          <div class="small" style="margin-top:6px">Partial credit: 1/3 for each correct item.</div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="question" data-qid="q4">
+          <div class="q-title">Q4. What items did the narrator use to build his small raft? (1 mark)</div>
+          <textarea class="answer" id="a4" placeholder="e.g. masts and ropes"></textarea>
+          <div class="small" style="margin-top:6px">Partial credit: points divided across listed correct items (masts, ropes).</div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="question" data-qid="q5">
+          <div class="q-title">Q5. How did the narrator describe his situation after he realized he was on an island? (1 mark)</div>
+          <textarea class="answer" id="a5" placeholder="Write a brief sentence — e.g. He felt like a prisoner, without a friend..."></textarea>
+          <div class="small" style="margin-top:6px">Partial credit: look for key phrases such as "prisoner", "without a friend", "wild beasts".</div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="question" data-qid="q6">
+          <div class="q-title">Q6. If you found yourself alone on an island like the narrator, which one thing that he rescued (bread, rice, cheese, or the axe) would you want most, and why? (1 mark)</div>
+          <textarea class="answer" id="a6" placeholder="Name one item (bread / rice / cheese / axe) and explain in 1–2 short sentences"></textarea>
+          <div class="small" style="margin-top:6px">Partial credit: 1 mark if item chosen is from the four and a short reason is given; 0.5 if only item named or only a reason provided.</div>
+        </div>
+
+        <div class="actions">
+          <button class="btn" id="submitBtn" onclick="gradeAndShow()">Submit Answers</button>
+          <button class="btn secondary" id="clearBtn" onclick="clearAll()" type="button">Clear answers</button>
+          <div class="score-box">
+            <div id="scoredisp" class="result" aria-live="polite"></div>
+            <div id="percentdisp" class="small"></div>
+          </div>
+        </div>
+      </form>
+
+      <!-- after submit -->
+      <div id="afterSubmit" class="hidden" style="margin-top:12px">
+        <div class="note">Results are private. You may download the full report (includes correct answers) below.</div>
+        <div style="margin-top:8px;display:flex;gap:10px;align-items:center">
+          <button class="btn" id="downloadPdfBtn" onclick="downloadPDFReport()">Download Results (PDF)</button>
+          <button class="btn secondary" onclick="window.location.reload()">Start New / Refresh</button>
+        </div>
+      </div>
+
+    </section>
+
+    <footer>
+      <small>Designed for Grade 5 reading practice — client-side only. For secure record-keeping use a server webhook (optional).</small>
+    </footer>
   </div>
 
-  <footer>
-    <small>Made for classrooms • Edit questions in the HTML • For secure collection, enable WEBHOOK or use a server.</small>
-  </footer>
-</div>
-
 <script>
-/* ========== CONFIG ========== */
-/* Put your webhook URL here to collect results server-side (optional) */
-const WEBHOOK_URL = ""; // e.g. https://hooks.example.com/collect
-
-/* Questions model: acceptable answers and scoring */
-const key = {
-  q1: {type:'mcq', correct:'b', points:1, feedback:"She heard birds singing in the morning."},
-  q2: {
-    type:'short',
-    // acceptable answers for short-answer (lowercase). Include synonyms.
-    accepts: ['an old book','a book','old book','a patched book','patched book','a book with no name','book'],
-    points:1,
-    feedback:"It was an old, patched book left at her doorstep."
-  },
-  q3: {
-    type:'checkbox',
-    correctSet: ['maps','tiny drawings'],
-    points:1,
-    feedback:"The book had maps and tiny drawings."
-  },
-  q4: {
-    type:'cloze',
-    accepts: ['note'],
-    points:1,
-    feedback:"The last page held a short note."
-  },
-  q5: {
-    type:'long',
-    keywords: ['brave','maps','adventure','follow','curious','changed'],
-    points:2,
-    feedback:"Look for words that connect her curiosity, the map, and a desire for change."
-  }
-};
-
-/* Fuzzy matching thresholds */
-const LEV_THRESHOLD = 2; // allow small typos
-const KEYWORD_MATCH_THRESHOLD = 1; // how many keywords to award partial for long answer
-
-/* ========== UTILITIES ========== */
+/* ================= utilities ================= */
 function normalize(s){ return String(s||'').trim().toLowerCase(); }
 
-// simple Levenshtein distance for fuzzy checks
+// simple Levenshtein distance for fuzzy matching
 function levenshtein(a,b){
   a=String(a||''); b=String(b||'');
   if(a===b) return 0;
   const m=a.length, n=b.length;
-  const dp = Array.from({length:m+1},(_,i)=>i);
+  if(m===0) return n;
+  if(n===0) return m;
+  const dp = Array(m+1).fill(0).map((_,i)=>i);
   for(let j=1;j<=n;j++){
     let prev = dp[0];
-    dp[0]=j;
+    dp[0] = j;
     for(let i=1;i<=m;i++){
       let cur = dp[i];
-      let cost = a[i-1]===b[j-1]?0:1;
-      dp[i] = Math.min(dp[i]+1, dp[i-1]+1, prev+cost);
+      const cost = a[i-1] === b[j-1] ? 0 : 1;
+      dp[i] = Math.min(dp[i] + 1, dp[i-1] + 1, prev + cost);
       prev = cur;
     }
   }
   return dp[m];
 }
 
-/* CSV helper */
-function toCSVRow(obj){
-  return Object.values(obj).map(v => `"${String(v).replace(/"/g,'""')}"`).join(',');
+// fuzzy match with small threshold
+function fuzzyEquals(ans, target){
+  ans = normalize(ans); target = normalize(target);
+  if(!ans || !target) return false;
+  if(ans === target) return true;
+  if(ans.includes(target) || target.includes(ans)) return true;
+  return levenshtein(ans, target) <= 2;
 }
 
-/* Save/Load */
-function saveState(){
-  const data = {name: (document.getElementById('studentName').value||'').trim()};
-  const inputs = new FormData(document.getElementById('quiz'));
-  for(let [k,v] of inputs.entries()){
-    // multiple checkboxes are captured individually; we'll build arrays
-    if(k in data && Array.isArray(data[k])) data[k].push(v);
-    else if(k in data) data[k] = [data[k], v];
-    else data[k] = v;
-  }
-  localStorage.setItem('readingQuizDraft', JSON.stringify(data));
-  showSavedName();
-}
-function loadState(){
-  try{
-    const raw = localStorage.getItem('readingQuizDraft');
-    if(!raw) return;
-    const data = JSON.parse(raw);
-    if(data.name) document.getElementById('studentName').value = data.name;
-    Object.keys(data).forEach(k=>{
-      if(k==='name') return;
-      const el = document.getElementsByName(k);
-      if(!el) return;
-      if(el[0] && el[0].type === 'radio'){
-        for(let r of el) if(r.value===data[k]) r.checked=true;
-      } else if(el[0] && el[0].type === 'checkbox'){
-        const arr = Array.isArray(data[k])?data[k]:[data[k]];
-        for(let c of el) if(arr.includes(c.value)) c.checked=true;
-      } else {
-        const single = document.getElementById(k);
-        if(single) single.value = Array.isArray(data[k])?data[k][0]:data[k];
-      }
-    });
-  } catch(e){ console.warn(e) }
-}
+/* ============== answer key & scoring rules ============== */
+/*
+We follow the user's provided key. Each question is worth 1 mark.
+Partial credit rules:
+- Q1 (title): Acceptable titles list; fuzzy match => full point. If includes main words like 'alone', 'island', 'raft', partial 0.5.
+- Q2 (axe): fuzzy match 'axe' => full point.
+- Q3 (bread, rice, cheese): 1/3 point per correct item.
+- Q4 (masts, ropes): 0.5 each for 'masts' and 'ropes' (total 1).
+- Q5 (description): check for key phrases: 'prisoner', 'without a friend', 'wild beasts' -> award fraction = matches/3.
+- Q6 (subjective): must name one of (bread, rice, cheese, axe) and give reason (>=4 words). If both present =>1, else 0.5 for item only or reason only.
+*/
 
-function clearAnswers(){
-  document.getElementById('quiz').reset();
-  localStorage.removeItem('readingQuizDraft');
-  document.getElementById('scoreDisplay').textContent='';
-  document.getElementById('finalCard').style.display='none';
-  showSavedName();
-}
+const KEY = {
+  q1: {accepts: ['alone on the island','robinson\'s survival','building a raft','a prisoner on the shore','alone on the shore','island survival'], worth:1},
+  q2: {accepts: ['axe','an axe','a axe'], worth:1},
+  q3: {items: ['bread','rice','cheese'], worth:1},
+  q4: {items: ['masts','mast','ropes','rope'], worth:1},
+  q5: {phrases: ['prisoner','without a friend','wild beasts'], worth:1},
+  q6: {choices: ['bread','rice','cheese','axe'], worth:1}
+};
 
-/* ========== GRADING LOGIC ========== */
-function grade(){
-  const name = (document.getElementById('studentName').value||'').trim();
-  if(!name){
-    alert('Please type the student name before submitting.');
+/* ================= grading ================= */
+function gradeAndShow(){
+  // require name and roll/class/section
+  const name = document.getElementById('st-name').value.trim();
+  const clas = document.getElementById('st-class').value.trim();
+  const section = document.getElementById('st-section').value.trim();
+  const roll = document.getElementById('st-roll').value.trim();
+  if(!name || !clas || !section || !roll){
+    alert('Please fill Name, Class, Section and Roll number before submitting.');
     return;
   }
 
-  const results = {};
-  let totalPoints = 0, earned = 0;
+  // collect answers
+  const a1 = document.getElementById('a1').value.trim();
+  const a2 = document.getElementById('a2').value.trim();
+  const a3 = document.getElementById('a3').value.trim();
+  const a4 = document.getElementById('a4').value.trim();
+  const a5 = document.getElementById('a5').value.trim();
+  const a6 = document.getElementById('a6').value.trim();
 
-  // Q1 mcq
-  totalPoints += key.q1.points;
-  const q1v = document.querySelector('input[name="q1"]:checked')?.value || '';
-  const q1ok = q1v === key.q1.correct;
-  results.q1 = {answer:q1v||'(no answer)', ok:q1ok, points: q1ok?key.q1.points:0, feedback: key.q1.feedback};
-  earned += results.q1.points;
+  const results = {}; // will store per-question details for PDF
+  let total = 0;
 
-  // Q2 short with accept list + fuzzy
-  totalPoints += key.q2.points;
-  const q2v = normalize(document.getElementById('q2').value);
-  let q2ok = false;
-  let matchedAccept = '';
-  if(q2v.length){
-    for(const acc of key.q2.accepts){
-      if(levenshtein(q2v, normalize(acc)) <= LEV_THRESHOLD){ q2ok = true; matchedAccept = acc; break; }
-      // also allow keyword contain
-      if(q2v.includes(normalize(acc))) { q2ok = true; matchedAccept = acc; break;}
+  // Q1: title
+  (function(){
+    const ans = normalize(a1);
+    let score = 0;
+    let matched = null;
+    for(const t of KEY.q1.accepts){
+      if(fuzzyEquals(ans, t)){ score = KEY.q1.worth; matched = t; break; }
     }
-  }
-  results.q2 = {answer:document.getElementById('q2').value || '(no answer)', ok:q2ok, points:q2ok?key.q2.points:0, feedback:key.q2.feedback + (matchedAccept?` (matched: "${matchedAccept}")`: '')};
-  earned += results.q2.points;
+    if(score === 0){
+      // partial: if contains 'alone' or 'island' or 'raft' or 'shore' etc.
+      const partialWords = ['alone','island','raft','shore','prisoner','survival'];
+      for(const w of partialWords){
+        if(ans.includes(w)){ score = 0.5; matched = `partial:${w}`; break; }
+      }
+    }
+    results.q1 = {question: 'Suggest a suitable title for this passage.', student: a1 || '(no answer)', correct: KEY.q1.accepts[0], score};
+    total += score;
+  })();
 
-  // Q3 checkbox multiple correct
-  totalPoints += key.q3.points;
-  const q3els = Array.from(document.querySelectorAll('input[name="q3"]:checked')).map(i=>i.value);
-  const correctSet = key.q3.correctSet;
-  // award point only if all correct chosen and no incorrects
-  const allCorrect = correctSet.every(x => q3els.includes(x));
-  const noExtras = q3els.every(x => correctSet.includes(x));
-  const q3ok = allCorrect && noExtras;
-  results.q3 = {answer:q3els.join(', ') || '(no answer)', ok:q3ok, points:q3ok?key.q3.points:0, feedback:key.q3.feedback};
-  earned += results.q3.points;
+  // Q2: axe
+  (function(){
+    const ans = normalize(a2);
+    let score = 0;
+    if(fuzzyEquals(ans, 'axe') || ans.includes('axe')) score = 1;
+    results.q2 = {question:'What did the narrator find in the cabins that helped him create a raft?', student: a2 || '(no answer)', correct:'axe', score};
+    total += score;
+  })();
 
-  // Q4 cloze
-  totalPoints += key.q4.points;
-  const q4v = normalize(document.getElementById('q4').value);
-  let q4ok = false;
-  for(const a of key.q4.accepts){
-    if(levenshtein(q4v, normalize(a)) <= LEV_THRESHOLD || q4v===normalize(a)) { q4ok=true; break; }
-  }
-  results.q4 = {answer:document.getElementById('q4').value || '(no answer)', ok:q4ok, points:q4ok?key.q4.points:0, feedback:key.q4.feedback};
-  earned += results.q4.points;
+  // Q3: three food items
+  (function(){
+    const raw = normalize(a3);
+    let score = 0;
+    const found = {};
+    KEY.q3.items.forEach(i => { if(raw.includes(i)) { found[i]=true; score += (1/KEY.q3.items.length); }});
+    // round to 2 decimals
+    score = Math.round(score*100)/100;
+    results.q3 = {question:'Name three food items the narrator rescued from the ship.', student: a3 || '(no answer)', correct:'bread, rice, cheese', score, details: found};
+    total += score;
+  })();
 
-  // Q5 long answer — keyword matching
-  totalPoints += key.q5.points;
-  const q5v = normalize(document.getElementById('q5').value);
-  let matchCount = 0;
-  for(const kw of key.q5.keywords){
-    if(q5v.includes(kw)) matchCount++;
-  }
-  // compute partial points: simple proportional
-  const q5points = Math.round((matchCount / key.q5.keywords.length) * key.q5.points * 100)/100;
-  const q5ok = q5points >= 1; // at least 1 point = acceptable
-  results.q5 = {answer:document.getElementById('q5').value || '(no answer)', ok:q5ok, points:q5points, feedback:key.q5.feedback + ` (keywords matched: ${matchCount})`};
-  earned += q5points;
+  // Q4: masts and ropes
+  (function(){
+    const raw = normalize(a4);
+    let score = 0;
+    // check masts / mast
+    if(raw.includes('mast') || raw.includes('masts')) score += 0.5;
+    if(raw.includes('rope') || raw.includes('ropes')) score += 0.5;
+    score = Math.round(score*100)/100;
+    results.q4 = {question:'What items did the narrator use to build his small raft?', student: a4 || '(no answer)', correct:'masts and ropes', score};
+    total += score;
+  })();
 
-  // Show results
-  displayResults(name, results, earned, totalPoints);
+  // Q5: description phrases
+  (function(){
+    const raw = normalize(a5);
+    let matches = 0;
+    const phrases = KEY.q5.phrases;
+    for(const p of phrases){
+      if(raw.includes(p) || fuzzyEquals(raw, p) || raw.includes(p.split(' ')[0])) matches++;
+    }
+    // cap by length
+    const score = Math.round((matches / phrases.length) * KEY.q5.worth * 100)/100;
+    results.q5 = {question:'How did the narrator describe his situation after he realized he was on an island?', student: a5 || '(no answer)', correct: 'He described himself as a prisoner, without a friend in the world; no one was on the island but wild beasts.', score, matches};
+    total += score;
+  })();
 
-  // Optionally POST to webhook
-  if(WEBHOOK_URL){
-    try {
-      fetch(WEBHOOK_URL, {
-        method:'POST',
-        headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({timestamp: new Date().toISOString(), student:name, results, score:{earned, totalPoints}})
-      }).catch(e => console.warn('Webhook failed', e));
-    } catch(e){ console.warn(e) }
-  }
+  // Q6: choose one and reason
+  (function(){
+    const raw = normalize(a6);
+    let score = 0;
+    let chosen = null;
+    for(const c of KEY.q6.choices){
+      if(raw.includes(c)) { chosen = c; break; }
+    }
+    // simple heuristic for reason: count words after item (or presence of verbs)
+    const words = raw.split(/\s+/).filter(Boolean);
+    const reasonWords = words.length >= 5 ? true : false; // approx
+    if(chosen && reasonWords) score = 1;
+    else if(chosen || reasonWords) score = 0.5;
+    results.q6 = {question:'If you found yourself alone on an island... which one thing and why?', student: a6 || '(no answer)', correct:'Any one of: bread, rice, cheese, or the axe (with reason)', score, chosen};
+    total += score;
+  })();
 
-  // Save draft (with final answers)
-  saveState();
+  // Round total to 2 decimals
+  total = Math.round(total*100)/100;
+  // Maximum possible: 6
+  const max = 6;
+  const percent = Math.round((total/max)*100);
 
-  return {name, results, earned, totalPoints};
+  // show on-screen results summary (no correct answers shown on-screen)
+  document.getElementById('scoredisp').textContent = `Score: ${total} / ${max}`;
+  document.getElementById('percentdisp').textContent = `${percent}%`;
+  document.getElementById('afterSubmit').classList.remove('hidden');
+
+  // store report payload in window for PDF generation
+  window.__rc_report = {
+    student:{name, class:clas, section, roll},
+    timestamp: new Date().toISOString(),
+    results,
+    total,
+    max,
+    percent
+  };
+
+  // scroll into view download button
+  document.getElementById('downloadPdfBtn').scrollIntoView({behavior:'smooth'});
+
+  // optionally disable submit to prevent re-submit accidentally
+  document.getElementById('submitBtn').disabled = true;
 }
 
-function displayResults(name, results, earned, total){
-  document.getElementById('finalCard').style.display='block';
-  const pct = Math.round((earned/total)*100);
-  document.getElementById('finalResult').textContent = `${name} — Score: ${earned}/${total} (${pct}%)`;
-  document.getElementById('scoreDisplay').textContent = `${earned}/${total}`;
-  const df = document.getElementById('detailedFeedback');
-  df.innerHTML = '';
-  Object.keys(results).forEach(q=>{
-    const r = results[q];
-    const el = document.createElement('div');
-    el.style.marginBottom='10px';
-    el.innerHTML = `<strong>${q.toUpperCase()}</strong> — <em>Answer:</em> ${escapeHtml(r.answer)}<br>
-                    <em>Points:</em> ${r.points} — ${r.ok?'<span style="color:green">Correct/Good</span>':'<span style="color:crimson">Needs review</span>'}<br>
-                    <small>${escapeHtml(r.feedback)}</small>`;
-    df.appendChild(el);
+/* ================= clear function ================= */
+function clearAll(){
+  if(!confirm('Clear all answers and student info?')) return;
+  document.getElementById('quizForm').reset();
+  document.getElementById('scoredisp').textContent = '';
+  document.getElementById('percentdisp').textContent = '';
+  document.getElementById('afterSubmit').classList.add('hidden');
+  document.getElementById('submitBtn').disabled = false;
+  window.__rc_report = null;
+}
+
+/* ================= PDF / PRINT report generation ================= */
+function downloadPDFReport(){
+  const rpt = window.__rc_report;
+  if(!rpt){
+    alert('No report found. Submit first.');
+    return;
+  }
+
+  // Build a clean printable HTML
+  const docTitle = `Reading_Comprehension_Practice1_${rpt.student.name.replace(/\s+/g,'_')}`;
+  const css = `
+    body{font-family: Arial, Helvetica, sans-serif;color:#111;margin:20px}
+    h1{font-size:20px;margin-bottom:6px}
+    .meta{font-size:13px;color:#444;margin-bottom:12px}
+    .summary{margin-top:8px;margin-bottom:14px}
+    table{width:100%;border-collapse:collapse;margin-top:8px}
+    th,td{border:1px solid #ddd;padding:8px;text-align:left;font-size:13px}
+    th{background:#f7f7f7}
+    .ok{color:green;font-weight:700}
+    .bad{color:#b33;font-weight:700}
+    .small{font-size:12px;color:#555}
+  `;
+
+  // Build rows for questions
+  let rows = '';
+  const res = rpt.results;
+  const order = ['q1','q2','q3','q4','q5','q6'];
+  order.forEach((k, idx) => {
+    const r = res[k];
+    let ok = (r.score >= 1) || ( (r.score>0) && (k==='q3' || k==='q4' || k==='q5') ); // consider partial as not full
+    // But mark as Correct only if full mark
+    const correctFlag = r.score >= 1 ? '<span class="ok">Correct</span>' : `<span class="bad">Incorrect / Partial</span>`;
+    rows += `<tr>
+      <th style="width:6%">${idx+1}</th>
+      <td style="width:36%"><strong>${escapeHtml(r.question)}</strong><div class="small">Correct answer: ${escapeHtml(r.correct)}</div></td>
+      <td style="width:34%">${escapeHtml(r.student)}</td>
+      <td style="width:12%">${r.score}</td>
+      <td style="width:12%">${correctFlag}</td>
+    </tr>`;
   });
+
+  const html = `
+    <html>
+    <head>
+      <title>${docTitle}</title>
+      <meta charset="utf-8" />
+      <style>${css}</style>
+    </head>
+    <body>
+      <h1>Reading Comprehension Practice 1 — Result</h1>
+      <div class="meta">
+        <div><strong>Name:</strong> ${escapeHtml(rpt.student.name)}</div>
+        <div><strong>Class:</strong> ${escapeHtml(rpt.student.class)} &nbsp;&nbsp; <strong>Section:</strong> ${escapeHtml(rpt.student.section)} &nbsp;&nbsp; <strong>Roll:</strong> ${escapeHtml(rpt.student.roll)}</div>
+        <div class="small"><strong>Generated:</strong> ${new Date(rpt.timestamp).toLocaleString()}</div>
+      </div>
+
+      <div class="summary">
+        <div><strong>Score:</strong> ${rpt.total} / ${rpt.max} &nbsp;&nbsp; <strong>Percentage:</strong> ${rpt.percent}%</div>
+      </div>
+
+      <table>
+        <thead><tr><th>#</th><th>Question & Correct Answer</th><th>Student Answer</th><th>Marks</th><th>Result</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+
+      <p style="margin-top:18px" class="small">Note: This report shows correct answers for teacher reference. Students may keep this PDF for their records.</p>
+    </body>
+    </html>
+  `;
+
+  // Open printable window and trigger print
+  const w = window.open('', '_blank');
+  w.document.open();
+  w.document.write(html);
+  w.document.close();
+
+  // Give a short delay to allow resources to load, then call print
+  setTimeout(()=> {
+    try{
+      w.focus();
+      w.print();
+      // keep the window open for the user; they can also use browser Save As PDF
+    } catch (e){
+      console.warn('Auto print failed', e);
+      alert('Your browser blocked automatic printing. A new tab with the report has opened — please use its Print / Save as PDF function.');
+    }
+  }, 400);
 }
 
-function escapeHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-
-/* ========== EXPORT ========== */
-function downloadCSV(){
-  const name = (document.getElementById('studentName').value||'').trim();
-  if(!name){ alert('Please enter student name before downloading'); return; }
-  const r = grade(); // grade again to ensure values
-  const ts = new Date().toISOString();
-  const obj = {timestamp:ts, student:r.name, score:`${r.earned}/${r.totalPoints}`, percent: Math.round((r.earned/r.totalPoints)*100)};
-  // flatten results into columns
-  Object.keys(r.results).forEach(k=>{
-    obj[k + '_answer'] = r.results[k].answer;
-    obj[k + '_points'] = r.results[k].points;
-  });
-  // header
-  const headers = Object.keys(obj).join(',');
-  const row = Object.values(obj).map(v => `"${String(v).replace(/"/g,'""')}"`).join(',');
-  const csv = headers + "\n" + row;
-  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = `${r.name.replace(/\s+/g,'_')}_reading_${new Date().toISOString().slice(0,10)}.csv`;
-  a.click();
-  URL.revokeObjectURL(url);
+/* helper escape */
+function escapeHtml(s){
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
-
-/* ========== UI glue ========== */
-document.getElementById('submitBtn').addEventListener('click', ()=>grade());
-document.getElementById('downloadCSV').addEventListener('click', ()=>downloadCSV());
-document.getElementById('clearBtn').addEventListener('click', ()=>{ if(confirm('Clear saved answers?')) clearAnswers(); });
-document.getElementById('saveName').addEventListener('click', ()=>saveState());
-
-function showSavedName(){
-  const n = (document.getElementById('studentName').value||'').trim();
-  document.getElementById('savedName').textContent = n?`Name saved: ${n}`:'No name yet';
-}
-
-loadState();
-showSavedName();
-
-/* Optional: autosave every 10s */
-setInterval(saveState, 10000);
 </script>
 </body>
 </html>
